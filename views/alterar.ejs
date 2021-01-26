@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <a href="./" rel="prev">Home</a>
+
+    <div data-js="outErr" class="err"></div>
+
+    <fieldset>
+      <legend>Cadastro de pessoas</legend>
+
+      <form action="/alterar-pessoa?cpf=<%= person.cpf %>" method="POST" data-js="form">
+
+        <div>
+          <label for="name">Nome:</label>  
+          <input type="text" data-js="name" name="name" id="name" value="<%= person.name %>">
+        </div>
+
+        <div>
+          <label for="lastName">Sobrenome:</label>  
+          <input type="text" data-js="lastName" name="lastName" id="lastName" value="<%= person.lastName %>">
+        </div>
+
+        <div>
+          <label for="cpf">CPF:</label>  
+          <input type="text" data-js="cpf" name="cpf" id="cpf" value="<%= person.cpf %>">
+        </div>
+
+        <div>
+          <label for="phone">Telefone:</label>  
+          <input type="text" data-js="phone" name="phone" id="phone" value="<%= person.phone %>">
+        </div>
+
+        <div>
+          <label for="address">Endereço:</label>  
+          <input type="text" data-js="address" name="address" id="address" value="<%= person.address %>">
+        </div>
+
+        <hr>
+
+        <div>
+          <input type="submit" value="Alterar">
+        </div>
+      </form>
+    </fieldset>   
+    <script src="./javascripts/validate.js"></script>
+  </body>
+</html>

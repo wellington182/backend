@@ -6,6 +6,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
+    <a href="./" rel="prev">Home</a>
 
     <div data-js="outErr" class="err"></div>
 
@@ -48,6 +49,17 @@
     </fieldset>
 
     <fieldset>
+      <legend>Buscar</legend>
+
+      <form action="/pesquisar" method="GET" data-js="form">
+        <label for="name">Nome:</label>
+        <input type="text" data-js="pname" name="name" id="pname">
+
+        <input type="submit" value="Pesquisar">
+      </form>
+    </fieldset>  
+
+    <fieldset>
       <legend>Pessoas cadastradas</legend>
 
       <table>
@@ -58,6 +70,7 @@
             <th>CPF</th>
             <th>Telefone</th>
             <th>Endereço</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +81,10 @@
               <td><%= person[i].cpf %></td>
               <td><%= person[i].phone %></td>
               <td><%= person[i].address %></td>
+              <td>
+                <a href="\alterar?cpf=<%= person[i].cpf  %>" data-js="btnEditar">Editar</a>
+                <a href="#" data-js="btnExcluir" data-cpf="<%= person[i].cpf  %>">Excluir</a>
+              </td>
             </tr>
           <% } %>
         </tbody>

@@ -35,4 +35,23 @@
 
     var form = doc.querySelector('[data-js="form"]' );
     form.addEventListener( 'submit', insert, false );
+
+    var tbody = doc.querySelector( 'tbody' );
+    
+    if ( tbody != null ) {
+        tbody.addEventListener( 'click', excluir, false );    
+    }
+    
+    function excluir(e) {
+        var target = e.target;
+        var cpf = target.getAttribute( 'data-cpf' );
+
+        if ( cpf !== null  ) {
+            e.preventDefault();
+
+            if ( confirm( 'Tem certeza que deseja excluir?') ) {
+                win.location.href = "excluir?cpf=" + cpf;
+            }
+        }        
+    }
 })(window, document);
