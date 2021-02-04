@@ -138,7 +138,7 @@ Person.delete = function(cpf, callback) {
         Person.saveAll(persons);
     });
 
-    callback.call(null, null);
+    callback.call();
 };
 
 
