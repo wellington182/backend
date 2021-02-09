@@ -79,31 +79,17 @@ Person.findByCPF = function(cpf, callback) {
 }
 
 Person.delete = function(cpf, callback) {
-    Person.all(function(persons) {
-        for ( var i = 0, length = persons.length;  i < length; i = i + 1 ){
-            if( cpf == persons[i].cpf ) {
-              
-              if ( i == 0 ) {
-                persons.shift();
-              }
-              else if ( i == length - 1 ) {
-                persons.pop();
-              }
-              else {
-                var first = persons.slice(0, i);
-                var last  = persons.slice(i+1);
-        
-                persons = first.concat(last);
-              }
-        
-              break;
-            }
+    var query = 'DELETE FROM empresa.pessoas WHERE cpf="' + cpf + '"';
+
+    App.db.cnn.exec( query, function( rows, err) {        
+        if ( err ) {
+            callback.call();
+            console.log( 'Erro na query( ' + query + ' )' );
         }
-
-        Person.saveAll(persons);
-    });
-
-    callback.call();
+        else  {
+            callback.call();
+        }
+    } );
 };
 
 

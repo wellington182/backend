@@ -49,7 +49,7 @@
         if ( cpf !== null  ) {
             e.preventDefault();
 
-            if ( confirm( 'Tem certeza que deseja excluir?') ) {
+            if ( confirm( 'Tem certeza que deseja excluir o cpf: ' + cpf +'?') ) {
                 win.location.href = "excluir?cpf=" + cpf;
             }
         }        
