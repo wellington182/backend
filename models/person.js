@@ -39,25 +39,16 @@ function Person() {
 }
 
 Person.all = function(callback) {
-    var fs = require('fs');
-
-    fs.readFile(App.FILE_BASE, function (err,dataDB) {
-        var persons = [];
-
-        if (err) {
-          console.log(err);
+    var query = 'SELECT * FROM empresa.pessoas';
+    App.db.cnn.exec( query, function( rows, err) {        
+        if ( err ) {
+            callback.call( null, [] );
+            console.log( 'Erro na query( ' + query + ' )' );
         }
-        else {
-          try {
-            persons = JSON.parse(dataDB);
-          }
-          catch( e ) {
-            console.log( e.message );
-          }
+        else  {
+            callback.call( null, rows );
         }
-        
-        callback.call(null, persons)
-      });
+    } );
 };
 
 Person.findByName = function(name, callback) {
