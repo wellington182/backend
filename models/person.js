@@ -65,17 +65,17 @@ Person.findByName = function(name, callback) {
 };
 
 Person.findByCPF = function(cpf, callback) {
-    Person.all(function(personsDB) {
-        var found = null;
+    var query = 'SELECT * FROM empresa.pessoas WHERE cpf="' + cpf + '"';
 
-        personsDB.forEach(function( person ) {  
-            if( cpf == person.cpf ) {
-                found = person;
-            }
-        });
-
-        callback.call(null, found);          
-    });
+    App.db.cnn.exec( query, function( rows, err) {        
+        if ( err ) {
+            callback.call( null, [] );
+            console.log( 'Erro na query( ' + query + ' )' );
+        }
+        else  {
+            callback.call( null, rows[0] );
+        }
+    } );
 }
 
 Person.delete = function(cpf, callback) {
