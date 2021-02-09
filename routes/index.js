@@ -56,8 +56,8 @@ router.post('/cadastrar-pessoa', function(req, res, next) {
   person.phone = req.body.phone;
   person.address = req.body.address;
 
-  person.save(function(persons) {  
-    res.render('index', {title: 'cadastrar-pessoa', person: persons});       
+  person.save(function() {  
+    res.redirect('/');       
   });
 
 });

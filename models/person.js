@@ -16,45 +16,26 @@ function Person() {
         var phoneInstance = this.phone;
         var addressInstance = this.address;
 
-        Person.all(function(persons) {
-            if ( cpf == undefined ) {
-                persons.push( {
-                    name: nameInstance,
-                    lastName: lastNameInstance,
-                    cpf: cpfInstance,
-                    phone: phoneInstance,
-                    address: addressInstance
-                });
-            }
-            else {
-                for ( var i = 0, length = persons.length;  i < length; i = i + 1 ){
-                    if( cpf == persons[i].cpf ) {
-                      persons[i].name = nameInstance;
-                      persons[i].lastName = lastNameInstance;
-                      persons[i].cpf = cpfInstance;
-                      persons[i].phone = phoneInstance;
-                      persons[i].address = addressInstance;
-            
-                      break;
-                    }
-                }
-            }
+        var query;
+        
+        
+        if ( cpf == undefined ) {
+            query = 'INSERT INTO empresa.pessoas(name, lastName, cpf, phone, address) values("' + nameInstance + '", "' + lastNameInstance + '", "' + cpfInstance + '", "' + phoneInstance + '", "' + addressInstance + '")';              
+        }
+        else {
+            query = 'UPDATE empresa.pessoas SET name="' + nameInstance + '", lastName="' + lastNameInstance + '", cpf="' + cpfInstance + '", phone="' + phoneInstance + '", address="' + addressInstance + '" WHERE cpf="' + cpf + '"'; 
+        }            
 
-            Person.saveAll(persons);
-
-            callback.call(null, persons)
-        });
+        App.db.cnn.exec( query, function( rows, err) {        
+            if ( err ) {
+                console.log( 'Erro na query( ' + query + ' )' );
+                callback.call( null );
+            }
+            else  {
+                callback.call( null );
+            }
+        } );
     };       
-}
-
-Person.saveAll = function(persons) {
-    var fs = require('fs');
-    
-    fs.writeFile(App.FILE_BASE, JSON.stringify(persons), function (err,data) {
-        if (err) {
-          console.log(err);
-        }                
-    });
 }
 
 Person.all = function(callback) {
