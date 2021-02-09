@@ -52,23 +52,16 @@ Person.all = function(callback) {
 };
 
 Person.findByName = function(name, callback) {
-    Person.all(function(personsDB) {
-        var regex = new RegExp( name, 'i' );
-        var persons = [];
-
-        if ( name.trim() == '' ) {
-            persons = personsDB;
+    var query = 'SELECT * FROM empresa.pessoas WHERE name LIKE "%' + name + '%"';
+    App.db.cnn.exec( query, function( rows, err) {        
+        if ( err ) {
+            callback.call( null, [] );
+            console.log( 'Erro na query( ' + query + ' )' );
         }
-        else {
-            personsDB.forEach(function( person ) {  
-                if( regex.test( person.name ) ) {
-                    persons.push( person );
-                }
-            } );
+        else  {
+            callback.call( null, rows );
         }
-
-        callback.call(null, persons);          
-    });
+    } );
 };
 
 Person.findByCPF = function(cpf, callback) {
